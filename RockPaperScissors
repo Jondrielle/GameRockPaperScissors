@@ -1,0 +1,124 @@
+#include <iostream>
+#include <stdlib.h>  
+using namespace std;
+
+enum gameChoice {
+        ROCK,PAPER,SCISSORS};
+        
+int playerWins = 0;
+int computerWins = 0;
+int roundValue = 1;
+
+gameChoice ComputerRandomChoice(){
+    
+    int randomChoice = rand() % 3;
+    gameChoice computerDrawnChoice;
+    
+        if (randomChoice == 0)
+            computerDrawnChoice = ROCK;
+        else if(randomChoice == 1)
+            computerDrawnChoice = PAPER;
+        else
+            computerDrawnChoice = SCISSORS;
+        
+      return computerDrawnChoice;
+}
+
+int readPlayerInput(){
+    
+    int input;
+    cin >> input;
+    
+    while( !(input <= 2 && input >= 0) ){
+        cout << "Please input: \n [0] : ROCK \n [1] : PAPER \n [2] : SCISSORS" << endl;
+        
+        cin >> input;
+    }
+    
+    return input;
+}
+
+void BeginGamePrompt(){
+    cout << "   ROCK PAPER SCISSORS " << endl;
+    cout << "-------------------------" << endl;
+    cout << "Player input 0 for Rock, 1 for Paper, or 2 for Scissors" << endl;
+}
+
+void RoundGamePrompt(){
+    cout << "   Round " << roundValue << endl;
+    cout << "-------------" << endl;
+}
+
+string RoundWinner(int &playerChoice, int &computerChoice){
+    string roundWinner; 
+    
+    if( (playerChoice == 0 && computerChoice == 2) ||
+        (playerChoice == 1 && computerChoice == 0) ||
+        (playerChoice == 2 && computerChoice == 1)
+      ){
+          roundWinner = "Player";
+          playerWins++;
+      }
+    else if(playerChoice == computerChoice){
+        roundWinner = "Neither";
+    }
+    else{
+        roundWinner = "Computer";
+        computerWins++;
+    }
+    
+    return roundWinner;
+}
+
+void RoundInProgress(){
+    cout << "Player Choose: ";
+    int playerChoice = readPlayerInput();
+    
+    int computerChoice = ComputerRandomChoice();
+    cout << "Computer Choose: " << computerChoice << endl;
+    
+    cout << RoundWinner(playerChoice,computerChoice) << " won this round" << endl;
+    cout << endl;
+}
+
+string GameWinner(int &playerWins,int &computerWins){
+    if(playerWins > computerWins){
+        return "Player";
+    }
+    else if(playerWins == computerWins){
+        RoundGamePrompt();
+        RoundInProgress();
+        roundValue++;
+       return GameWinner(playerWins,computerWins);
+    }
+    else{
+        return "Computer";
+    }
+}
+
+int main() {
+    // Game Prompt 
+    BeginGamePrompt();
+    
+    //Round 1
+    RoundGamePrompt();
+    RoundInProgress();
+    roundValue++;
+    
+    //Round 2
+    RoundGamePrompt();
+    RoundInProgress();
+    roundValue++;
+    
+    //Round 3
+    RoundGamePrompt();
+    RoundInProgress();
+    roundValue++;
+    
+    //Announce Game Winner
+    cout << GameWinner(playerWins,computerWins) << " won the entire game";
+    
+    
+    
+    return 0;
+}
