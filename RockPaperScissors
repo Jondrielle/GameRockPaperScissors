@@ -1,3 +1,4 @@
+// Online C++ compiler to run C++ program online
 #include <iostream>
 #include <stdlib.h>  
 using namespace std;
@@ -96,29 +97,47 @@ string GameWinner(int &playerWins,int &computerWins){
     }
 }
 
+void resetValues(){
+    roundValue = 1;
+    playerWins = 0;
+    computerWins = 0;
+}
+
 int main() {
-    // Game Prompt 
-    BeginGamePrompt();
     
-    //Round 1
-    RoundGamePrompt();
-    RoundInProgress();
-    roundValue++;
-    
-    //Round 2
-    RoundGamePrompt();
-    RoundInProgress();
-    roundValue++;
-    
-    //Round 3
-    RoundGamePrompt();
-    RoundInProgress();
-    roundValue++;
-    
-    //Announce Game Winner
-    cout << GameWinner(playerWins,computerWins) << " won the entire game";
-    
-    
+    while(true){
+        
+        // Game Prompt 
+        BeginGamePrompt();
+        
+        //Round 1
+        RoundGamePrompt();
+        RoundInProgress();
+        roundValue++;
+        
+        //Round 2
+        RoundGamePrompt();
+        RoundInProgress();
+        roundValue++;
+        
+        //Round 3
+        RoundGamePrompt();
+        RoundInProgress();
+        roundValue++;
+        
+        //Announce Game Winner
+        cout << GameWinner(playerWins,computerWins) << " won the entire game"<< endl;
+        
+        cout << "Play Again?" << endl;
+        string playAgainResponse;
+        cin >> playAgainResponse;
+        
+        if(playAgainResponse == "no"){
+            exit(0);
+        }
+        
+        resetValues();
+    }
     
     return 0;
 }
